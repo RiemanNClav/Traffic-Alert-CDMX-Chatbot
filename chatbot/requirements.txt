@@ -1,0 +1,5 @@
+geopy==2.4.1
+requests==2.32.3
+rasa==3.6.20
+mlflow==2.16.2
+dill==0.3.9
