@@ -38,7 +38,7 @@ class ModelTrainer:
             "params": {
                     # 'criterion':['squared_error', 'friedman_mse', 'absolute_error', 'poisson'],
                     # 'max_features':['sqrt','log2',None],
-                    'n_estimators': [5,10, 20]
+                    'n_estimators': [5]
                     }
                 }
         }
