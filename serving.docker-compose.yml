@@ -7,32 +7,32 @@ services:
       context: ./chatbot
       dockerfile: chatbot.dockerfile
     ports:
-      - "5005:5005"  # Exponiendo el puerto de Rasa
+      - "5005:5005" 
     environment:
       - TWILIO_ACCOUNT_SID=${TWILIO_ACCOUNT_SID}
       - TWILIO_AUTH_TOKEN=${TWILIO_AUTH_TOKEN}
       - TWILIO_NUMBER=${TWILIO_NUMBER}
     volumes:
-      - ./chatbot:/app  # Montando todo el directorio /chatbot
-    command: run --enable-api --cors '*' --debug  # Comando para iniciar Rasa
+      - ./chatbot:/app
+    command: run --enable-api --cors '*' --debug
 
   rasa-action-server:
     build:
       context: ./chatbot
-      dockerfile: actions.dockerfile  # Cambia esto si tienes un Dockerfile para el servidor de acciones
+      dockerfile: actions.dockerfile
     ports:
-      - "5055:5055"  # Exponiendo el puerto del servidor de acciones
+      - "5055:5055"
     environment:
       - TWILIO_ACCOUNT_SID=${TWILIO_ACCOUNT_SID}
       - TWILIO_AUTH_TOKEN=${TWILIO_AUTH_TOKEN}
       - TWILIO_NUMBER=${TWILIO_NUMBER}
     volumes:
-       - ./chatbot/actions:/app/actions  # Montando el directorio actual en /app del contenedor
-    command: ["run", "actions", "--debug"]  # C
+       - ./chatbot/actions:/app/actions
+    command: ["run", "actions", "--debug"]
 
   model:
     build:
       context: ./model
       dockerfile: model.dockerfile
     ports:
-      - "5001:5001"  # Puerto para el servicio de modelo
+      - "5001:5001"
