@@ -4,8 +4,7 @@ from rasa_sdk import Action, Tracker
 from rasa_sdk.executor import CollectingDispatcher
 from rasa_sdk.events import SlotSet
 from actions.api import ApiRequest
-# from src.pipelines.prediction_pipeline import PredictPipeline, CustomData
-
+from src.pipeline_prediction import send_data_to_model
 
 class ActionGetAddressLatLong(Action):
 
@@ -46,12 +45,15 @@ class ActionGetAddressLatLong(Action):
                 dispatcher.utter_message(text=response)
                 return [SlotSet("latitud", None), SlotSet("longitud", None), SlotSet("colonia", None), SlotSet("alcaldia", None), SlotSet("color", None), SlotSet("marca", None)]
             
-        
-        # data = CustomData(mes, dia, marca, colonia, alcaldia) 
-        # pred_df = data.get_data_as_dataframe()
 
-        # predict_pipeline=PredictPipeline()
-        # results=predict_pipeline.predict(pred_df)
+        input_data = {
+            'mes': [mes],
+            'marca_general': [marca],
+            'colonia': [colonia],
+            'dia': [dia],
+            'alcaldia': [alcaldia]}
+
+        predictions = send_data_to_model(input_data)
 
         response = f"Los datos basados en estas coordenadas ({latitud}, {longitud}) son: \n"
         response += f"Alcaldia: {alcaldia} \n"
@@ -60,7 +62,7 @@ class ActionGetAddressLatLong(Action):
         response += f"Mes: {mes} \n"
         response += f"Color del Automovil: {color} \n"
         response += f"Marca del Automovil: {marca} \n"
-        # response += f"El incidente de tránsito que es más probable que cometas de acuerdo a estos registros es : {results} \n"
+        response += f"El incidente de tránsito que es más probable que cometas de acuerdo a estos registros es : {predictions} \n"
 
         dispatcher.utter_message(text=response)
         return [SlotSet("latitud", None), SlotSet("longitud", None), SlotSet("colonia", None), SlotSet("alcaldia", None), SlotSet("color", None), SlotSet("marca", None)]

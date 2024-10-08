@@ -3,7 +3,6 @@ FROM rasa/rasa-sdk:3.6.2
 
 USER root
 
-
 # Use subdirectory as working directory
 WORKDIR /app
 
@@ -14,6 +13,7 @@ RUN pip install -r requirements.txt
 
 
 # Copy actions folder to working directory
+COPY ./src /app/src
 COPY ./actions /app/actions
 COPY entrypoint.sh /app/entrypoint.sh
 

@@ -2,9 +2,8 @@ import requests
 from geopy.geocoders import Nominatim
 import time
 from datetime import datetime
-# import pandas as pd
+import pandas as pd
 import os
-# import Levenshtein
 
 
  
