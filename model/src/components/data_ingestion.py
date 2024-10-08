@@ -17,9 +17,9 @@ from src.components.create_run import run_id
 @dataclass
 class DataIngestionConfig:
     base_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-    train_data_path: str=os.path.join(base_dir, 'model', 'artifacts',"train.csv")
-    test_data_path: str=os.path.join(base_dir, 'model', 'artifacts',"test.csv")
-    raw_data_path: str=os.path.join(base_dir, 'model', 'artifacts',"data.csv")
+    train_data_path: str=os.path.join(base_dir, 'artifacts',"train.csv")
+    test_data_path: str=os.path.join(base_dir,  'artifacts',"test.csv")
+    raw_data_path: str=os.path.join(base_dir,  'artifacts',"data.csv")
 
 class DataIngestion:
     def __init__(self):

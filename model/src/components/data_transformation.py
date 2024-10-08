@@ -29,6 +29,22 @@ class DataCleaning(object):
     def __init__(self):
         pass
 
+    def clasificar_categoria(self, x):
+        if isinstance(x, str):
+            if "INCOMPLETA" in x or "NO TENER LICENCIA" in x:
+                return "DOCUMENTACION INCOMPLETA"
+            elif "MAL USO" in x or "ABANDONO" in x or "ESTACIONAR" in x or "VIA" in x or "INFRINGIR" in x:
+                return "USO INCORRECTO DE LA VIA PUBLICA"
+            elif "EXCEDER" in x:
+                return "EXCESO DE VELOCIDAD"
+            elif "EFECTOS" in x:
+                return "CONDUCIR BAJO INFLUENCIA"
+            elif "NO RESPETAR" in x or "VIOLACIONES" in x or "INMOVILIZACION" in x or "VEHICULOS" in x:
+                return "INFRACCIONES DE TRANSITO"
+            elif "INCUMPLIR" in x or "VIOLAR NORMAS" in x or "PONER EN RIESGO" in x:
+                return "SEGURIDAD VIAL"
+        return x
+
     def initiate_data_cleaning(self, df):
 
         try:
@@ -66,29 +82,32 @@ class DataCleaning(object):
             df['alcaldia'] = df['alcaldia'].apply(lambda x: "ALVARO OBREGON" if isinstance(x, str) and "ALVARO" in x else x)
 
 
-            df['categoria'] = df['categoria'].apply(lambda x: "DOCUMENTACION INCOMPLETA" if isinstance(x, str) and "INCOMPLETA" in x else x)
-            df['categoria'] = df['categoria'].apply(lambda x: "DOCUMENTACION INCOMPLETA" if isinstance(x, str) and "NO TENER LICENCIA" in x else x)
-
-            df['categoria'] = df['categoria'].apply(lambda x: "USO INCORRECTO DE LA VIA PUBLICA" if isinstance(x, str) and "MAL USO" in x else x)
-            df['categoria'] = df['categoria'].apply(lambda x: "USO INCORRECTO DE LA VIA PUBLICA" if isinstance(x, str) and "ABANDONO" in x else x)
-            df['categoria'] = df['categoria'].apply(lambda x: "USO INCORRECTO DE LA VIA PUBLICA" if isinstance(x, str) and "ESTACIONAR" in x else x)
-            df['categoria'] = df['categoria'].apply(lambda x: "USO INCORRECTO DE LA VIA PUBLICA" if isinstance(x, str) and "VIA" in x else x)
-            df['categoria'] = df['categoria'].apply(lambda x: "USO INCORRECTO DE LA VIA PUBLICA" if isinstance(x, str) and "INFRINGIR" in x else x)
-
-            df['categoria'] = df['categoria'].apply(lambda x: "EXCESO DE VELOCIDAD" if isinstance(x, str) and "EXCEDER" in x else x)
-
-            df['categoria'] = df['categoria'].apply(lambda x: "CONDUCIR BAJO INFLUENCIA" if isinstance(x, str) and "EFECTOS" in x else x)
-
-            df['categoria'] = df['categoria'].apply(lambda x: "INFRACCIONES DE TRANSITO" if isinstance(x, str) and "NO RESPETAR" in x else x)
-            df['categoria'] = df['categoria'].apply(lambda x: "INFRACCIONES DE TRANSITO" if isinstance(x, str) and "VIOLACIONES" in x else x)
-            df['categoria'] = df['categoria'].apply(lambda x: "INFRACCIONES DE TRANSITO" if isinstance(x, str) and "INMOVILIZACION" in x else x)
-            df['categoria'] = df['categoria'].apply(lambda x: "INFRACCIONES DE TRANSITO" if isinstance(x, str) and "VEHICULOS" in x else x)
+            df['categoria'] = df['categoria'].apply(self.clasificar_categoria)
 
 
+            # df['categoria'] = df['categoria'].apply(lambda x: "DOCUMENTACION INCOMPLETA" if isinstance(x, str) and "INCOMPLETA" in x else x)
+            # df['categoria'] = df['categoria'].apply(lambda x: "DOCUMENTACION INCOMPLETA" if isinstance(x, str) and "NO TENER LICENCIA" in x else x)
 
-            df['categoria'] = df['categoria'].apply(lambda x: "SEGURIDAD VIAL" if isinstance(x, str) and "INCUMPLIR" in x else x)
-            df['categoria'] = df['categoria'].apply(lambda x: "SEGURIDAD VIAL" if isinstance(x, str) and "VIOLAR NORMAS" in x else x)
-            df['categoria'] = df['categoria'].apply(lambda x: "SEGURIDAD VIAL" if isinstance(x, str) and "PONER EN RIESGO" in x else x)
+            # df['categoria'] = df['categoria'].apply(lambda x: "USO INCORRECTO DE LA VIA PUBLICA" if isinstance(x, str) and "MAL USO" in x else x)
+            # df['categoria'] = df['categoria'].apply(lambda x: "USO INCORRECTO DE LA VIA PUBLICA" if isinstance(x, str) and "ABANDONO" in x else x)
+            # df['categoria'] = df['categoria'].apply(lambda x: "USO INCORRECTO DE LA VIA PUBLICA" if isinstance(x, str) and "ESTACIONAR" in x else x)
+            # df['categoria'] = df['categoria'].apply(lambda x: "USO INCORRECTO DE LA VIA PUBLICA" if isinstance(x, str) and "VIA" in x else x)
+            # df['categoria'] = df['categoria'].apply(lambda x: "USO INCORRECTO DE LA VIA PUBLICA" if isinstance(x, str) and "INFRINGIR" in x else x)
+
+            # df['categoria'] = df['categoria'].apply(lambda x: "EXCESO DE VELOCIDAD" if isinstance(x, str) and "EXCEDER" in x else x)
+
+            # df['categoria'] = df['categoria'].apply(lambda x: "CONDUCIR BAJO INFLUENCIA" if isinstance(x, str) and "EFECTOS" in x else x)
+
+            # df['categoria'] = df['categoria'].apply(lambda x: "INFRACCIONES DE TRANSITO" if isinstance(x, str) and "NO RESPETAR" in x else x)
+            # df['categoria'] = df['categoria'].apply(lambda x: "INFRACCIONES DE TRANSITO" if isinstance(x, str) and "VIOLACIONES" in x else x)
+            # df['categoria'] = df['categoria'].apply(lambda x: "INFRACCIONES DE TRANSITO" if isinstance(x, str) and "INMOVILIZACION" in x else x)
+            # df['categoria'] = df['categoria'].apply(lambda x: "INFRACCIONES DE TRANSITO" if isinstance(x, str) and "VEHICULOS" in x else x)
+
+
+
+            # df['categoria'] = df['categoria'].apply(lambda x: "SEGURIDAD VIAL" if isinstance(x, str) and "INCUMPLIR" in x else x)
+            # df['categoria'] = df['categoria'].apply(lambda x: "SEGURIDAD VIAL" if isinstance(x, str) and "VIOLAR NORMAS" in x else x)
+            # df['categoria'] = df['categoria'].apply(lambda x: "SEGURIDAD VIAL" if isinstance(x, str) and "PONER EN RIESGO" in x else x)
 
 
             df = df[['anio_infraccion' ,'mes', 'color_aux', 'marca_general', 'colonia', 'dia', 'alcaldia', 'categoria']]
