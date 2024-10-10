@@ -17,10 +17,9 @@ model = load_object(model_path)
 
 @app.route('/predict', methods=['POST'])
 def predict():
-    data = request.json  # Supongamos que los datos llegan en formato JSON
+    data = request.json
     df = pd.DataFrame(data)
 
-    # Aplicar el preprocesador y realizar la predicción
     scaled_data = preprocessor.transform(df)
     pred_label = model.predict(scaled_data)[0]
 
@@ -33,4 +32,4 @@ def predict():
     return jsonify({'predictions': pred})
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5001)  # Cambia el puerto si es necesario
+    app.run(host='0.0.0.0', port=5001)

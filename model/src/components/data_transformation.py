@@ -124,7 +124,6 @@ class FrequencyEncoder(BaseEstimator, TransformerMixin):
         self.categoricas =   categoricas
 
     def fit(self, X, y=None):
-        # Calcular la frecuencia de cada valor categórico
         for col in self.categoricas:
             values = X[col].value_counts(normalize=True).to_dict()
             self.frequency_dict[col] = values
@@ -132,7 +131,6 @@ class FrequencyEncoder(BaseEstimator, TransformerMixin):
         return self
 
     def transform(self, X):
-        # Reemplazar los valores por su frecuencia
         for col in self.categoricas:
 
             X[col] = X[col].map(self.frequency_dict[col]).fillna(0).values.reshape(-1, 1)
@@ -154,7 +152,6 @@ class SimpleImputer_(BaseEstimator, TransformerMixin):
         return self
 
     def transform(self, X):
-        # Reemplazar los valores por su frecuencia
 
         X_array= self.imputer.transform(X)
         
@@ -295,7 +292,6 @@ class DataTransformation:
 
             )
 
-            ## INICIO MLFLOW
 
 
             return (

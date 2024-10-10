@@ -1,9 +1,0 @@
-version: '3.8'
-services:
-  model:
-
-    build:
-      context: ./model
-      dockerfile: model.dockerfile
-    ports:
-      - "5001:5001"  # Puerto para el servicio de modelo
